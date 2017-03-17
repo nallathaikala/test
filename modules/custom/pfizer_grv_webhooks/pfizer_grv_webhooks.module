@@ -1,0 +1,52 @@
+<?php
+/**
+ * @file
+ *
+ * Module file for pfizer_grv_webhooks
+ */
+
+function pfizer_grv_webhooks_menu() {
+  $items['pfizer-grv-webhooks/hcp-validation/%/%'] = array(
+    'title' => 'Pfizer GRV Hcp Validation',
+    'description' => 'Get the status of an HCP professional',
+    'page callback' => 'pfizer_grv_webhooks_hcp_validation',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+function pfizer_grv_webhooks_hcp_validation($uuid, $country) {
+  $uuid = check_plain($uuid);
+  $country = check_plain($country);
+
+  $url = variable_get('pfizer_grv_webhooks_hcp_validate_url', NULL);
+  $url = str_replace('@uuid', $uuid, str_replace('@country', $country, $url));
+  $username = variable_get('pfizer_grv_webhooks_hcp_validate_user', NULL);
+  $password = variable_get('pfizer_grv_webhooks_hcp_validate_pass', NULL);
+
+  if ($url && $username && $password) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+    $output = curl_exec($ch);
+
+    curl_close($ch);
+
+    $data = json_decode($output);
+
+    if (strtolower($data->validationStatus) == "error") {
+      $output = json_encode(array("validationStatus" => "pending"));
+    }
+  }
+  else {
+    $output = json_encode(array('status' => 'error', 'description' => 'missing credentials'));
+  }
+
+  drupal_add_http_header('Access-Control-Allow-Origin', '*');
+
+  drupal_json_output($output);
+}

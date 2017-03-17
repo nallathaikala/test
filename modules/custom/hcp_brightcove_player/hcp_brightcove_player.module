@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the HCP: Brightcove Player feature.
+ */
+
+include_once 'hcp_brightcove_player.features.inc';

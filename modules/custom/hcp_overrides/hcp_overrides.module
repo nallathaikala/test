@@ -1,0 +1,28 @@
+<?php
+/**
+ * @file
+ * HCP Overrides module.
+ */
+
+/**
+ * Implements hook_init()
+ */
+ function hcp_overrides_init() {
+  // Add CSS overrides file
+  drupal_add_css(drupal_get_path('module', 'hcp_overrides') . '/css/hcp_overrides.css', array(
+    'weight' => 32766,
+    'group' => CSS_THEME,
+    )
+  );
+}
+
+
+/**
+ * Implements hook_menu_get_item_alter()
+ */
+function hcp_overrides_translated_menu_link_alter(&$link) {
+  // Hide the "User account" link for anonymous users.
+  if ($link['link_path'] == 'user' && $link['module'] == 'menu' && !$GLOBALS['user']->uid) {
+    $link['hidden'] = 1;
+  }
+}

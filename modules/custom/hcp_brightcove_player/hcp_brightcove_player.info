@@ -1,0 +1,13 @@
+name = HCP: Brightcove Player
+description = Adds a default Player to Brightcove
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = hcp_brightcove_player
+dependencies[] = brightcove
+dependencies[] = brightcove_field
+dependencies[] = brightcove_media
+dependencies[] = ctools
+features[brightcove_player][] = brightcove_player
+features[ctools][] = brightcove:brightcove:1
+features[features_api][] = api:2

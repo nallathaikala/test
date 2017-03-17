@@ -1,0 +1,6 @@
+name = Pfizer GRV Webhooks
+description = Provides API access to update Janrain Capture users and update their user status.
+
+package = pfizer
+core = 7.x
+version = "7.x-1.0"

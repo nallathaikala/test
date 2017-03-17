@@ -1,0 +1,17 @@
+/* hcp_overrides.css */
+
+@media (min-width: 960px) and (max-width: 1365px) {
+    #block-system-main-menu ul.menu li a {
+        padding: 20px 5px;
+    }
+}
+/* ZD#79329 - Fixes for border issue and alignment */
+.front .panel-display.hcp-universal.hcp-universal-stacked > .row {
+  margin: 0;
+}
+.node-type-hcp-landing-page .hcp-landing-container.hcp-column.panel.cols-3.row.hcp-landing-secondary-column-content {
+  margin: 0;
+}
+.panel-pane.default .field-type-text-long, .panel-pane.default .field-type-text-long .field-item {
+  background-color: transparent;
+}
